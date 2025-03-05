@@ -62,7 +62,6 @@ public class CategoryController {
                 throw new NotFoundException("Could not update book with ID " + id + " it does not exist");
             } 
        
-
             return new ResponseEntity<Category>(result.get(), HttpStatus.OK);
         }
 

@@ -20,3 +20,6 @@
 - status In progress | Done | Archived | Deleted
 - createdDate
 - updatedDate
+
+## Considerations
+- fetching a large amount of data
