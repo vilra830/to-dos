@@ -3,6 +3,7 @@ package io.nology.to_dos.task;
 import java.util.Locale.Category;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +12,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+@Entity
 public class Task {
+
+    public Task() {
+    }
 
     public enum TaskStatus {
         IN_PROGRESS,
@@ -66,7 +71,18 @@ public class Task {
     public void setIsArchived(Boolean isArchived) {
         this.isArchived = isArchived;
     }
-    public Task() {
+   
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+    public Long getId() {
+        return id;
+    }
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
     }
 
 
