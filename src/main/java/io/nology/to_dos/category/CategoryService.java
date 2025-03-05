@@ -58,7 +58,7 @@ public class CategoryService {
             foundCategory.setName(data.getName().trim());
         }
 
-        if(data.getDescription()    != null){
+        if(data.getDescription() != null){
 
             foundCategory.setDescription(data.getDescription().trim());
         }
