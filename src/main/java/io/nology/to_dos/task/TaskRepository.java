@@ -1,5 +1,11 @@
 package io.nology.to_dos.task;
 
-public class TaskRepository {
+import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+@Repository
+public interface TaskRepository extends JpaRepository<Task, Long> {
+
+    
 
 }
