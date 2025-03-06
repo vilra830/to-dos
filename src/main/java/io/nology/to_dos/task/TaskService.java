@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import io.nology.to_dos.category.CategoryRepository;
 import io.nology.to_dos.category.CategoryService;
 import io.nology.to_dos.common.exceptions.NotFoundException;
+import io.nology.to_dos.task.Task.TaskStatus;
 import jakarta.validation.Valid;
 
 @Service
@@ -46,10 +47,19 @@ public class TaskService {
 
 
     public List<Task> getAll() {
-        // // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+                return taskRepository.findAll();
+    }
+    
+    
+    public List<Task> getTasksBbyCategory(Long id) {
+        // you need to fetch all tasks from DB using taskrepo.findbyCategory(category id)
+        return taskRepository.findByCategory(id);
+    }
 
-        return taskRepository.findAll();
+
+    public List<Task> getTasksByStatus(TaskStatus taskStatus) {
+
+        return taskRepository.findByTaskStatus(taskStatus);
     }
 
 }
