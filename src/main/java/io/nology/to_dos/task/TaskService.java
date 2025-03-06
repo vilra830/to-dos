@@ -1,6 +1,8 @@
 package io.nology.to_dos.task;
 
 import io.nology.to_dos.category.Category;
+
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,14 @@ public class TaskService {
         return taskRepository.save(newTask);
 
 
+    }
+
+
+    public List<Task> getAll() {
+        // // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+
+        return taskRepository.findAll();
     }
 
 }
