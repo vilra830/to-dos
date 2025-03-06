@@ -1,6 +1,6 @@
 package io.nology.to_dos.task;
 
-import java.util.Locale.Category;
+import io.nology.to_dos.category.Category;  
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
