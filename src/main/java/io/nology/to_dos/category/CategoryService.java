@@ -79,6 +79,18 @@ public class CategoryService {
         return this.repo.findById(id);
     }
 
+    public boolean deleteById(Long id) {
+        // TODO Auto-generated method stub
+        //deletebyId or by entity - returns void - how can we know that the entity is deleted or not - query it - look up the entity
+        Optional <Category> category  = this.getById(id);
+        if(category.isEmpty()) {
+            return false;
+        } 
+
+        this.repo.deleteById(id);
+        return true;
+    }
+
 
 
 
