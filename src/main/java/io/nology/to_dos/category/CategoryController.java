@@ -61,7 +61,7 @@ public class CategoryController {
             Optional<Category> result = this.categoryService.updateById(id, data);
 
             if(result.isEmpty()){
-                throw new NotFoundException("Could not update book with ID " + id + " it does not exist");
+                throw new NotFoundException("Could not update Category with ID " + id + " it does not exist");
             } 
        
             return new ResponseEntity<Category>(result.get(), HttpStatus.OK);
@@ -82,7 +82,7 @@ public class CategoryController {
             }
             Category foundCategory = category.get();
 
-
+            //if it does not match our DTO - it will return 400 Bad Request
             return new ResponseEntity<>(foundCategory, HttpStatus.OK);
     
     
@@ -99,7 +99,7 @@ public class CategoryController {
             boolean wasDeleted = this.categoryService.deleteById(id);
             if(!wasDeleted) {
 
-                throw new NotFoundException("Could not delete book with id " + id + " as it does not exist");
+                throw new NotFoundException("Could not delete Category with id " + id + " as it does not exist");
             }
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
