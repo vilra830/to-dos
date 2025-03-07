@@ -72,6 +72,13 @@ public class CategoryService {
 
     }
 
+    public Optional<Category> getCategoryById(Long id) {
+        // // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'getCategoryById'");
+
+        return this.repo.findById(id);
+    }
+
 
 
 

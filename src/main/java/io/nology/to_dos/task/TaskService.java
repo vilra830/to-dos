@@ -50,10 +50,17 @@ public class TaskService {
                 return taskRepository.findAll();
     }
     
-    
-    public List<Task> getTasksBbyCategory(Long id) {
+
+    public List<Task> getTasksBbyCategory(Long id) throws Exception {
         // you need to fetch all tasks from DB using taskrepo.findbyCategory(category id)
-        return taskRepository.findByCategory(id);
+        Optional<Category> result = categoryRepository.findById(id);
+
+        if (result.isEmpty()){
+            throw new Exception("No category found on this ID " + id);
+        } 
+
+        Category category = result.get();
+        return taskRepository.findByCategory(category);
     }
 
 

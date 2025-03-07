@@ -11,7 +11,7 @@ import io.nology.to_dos.task.Task.TaskStatus;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-   List<Task> findByCategory(Long categoryId);
+   List<Task> findByCategory(Category category);
 
    List<Task> findByTaskStatus(TaskStatus taskStatus);
     

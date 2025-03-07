@@ -65,5 +65,35 @@ public class CategoryController {
             return new ResponseEntity<Category>(result.get(), HttpStatus.OK);
         }
 
+        @GetMapping("/{id}")
+        //Find the ID otherwise throw an exception but I had to tell my app that this method could throw an exception 
+        //why am i throwing the exception in Controller? Why not in Service?
+        // Rule of Thumb -Try to do the error handling in the controller layer rather than in the service 
+        // because controller that deals with response entity
+        // the service is fine to return an empty optional
+        
+
+        public ResponseEntity<Category> getCategoryById(@PathVariable Long id) throws NotFoundException {
+            Optional<Category> category = this.categoryService.getCategoryById(id);
+
+
+            // You should never call .get() directly on an Optional without first checking if the value is present.
+            //  The get() method throws a NoSuchElementException when the Optional is empty. 
+            //  Instead, you should check if the value is present using .isPresent() or, preferably, use the ifPresent or orElseThrow methods.
+            if(category.isEmpty()){
+
+                throw new NotFoundException("Could not find Category with ID " + id);
+
+            }
+            Category foundCategory = category.get();
+
+
+            return new ResponseEntity<>(foundCategory, HttpStatus.OK);
+    
+    
+            
+        }
+        
+
 
   }
