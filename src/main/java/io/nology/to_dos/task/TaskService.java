@@ -5,6 +5,7 @@ import io.nology.to_dos.category.Category;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,10 @@ public class TaskService {
     @Autowired
     private CategoryService categoryService;
     
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public Task createTask(CreateTaskDTO data) {
+    public Task createTask(CreateTaskDTO data) throws NotFoundException {
         
         Category category = categoryRepository.findById(data.getCategoryId()).orElseThrow( () -> new NotFoundException("Category not found"));
 
@@ -39,6 +42,8 @@ public class TaskService {
         newTask.setName(data.getName());
         newTask.setDescription(data.getDescription());
         newTask.setTaskStatus(data.getTaskStatus());
+
+        // Task newTask = modelMapper.map(data, Task.class);
 
         return taskRepository.save(newTask);
 
