@@ -46,10 +46,12 @@ public class TaskController {
       
     }
 
-    // @GetMapping("/{categoryId}")
-    // public List<Task> getTasksByCategoryId(@PathVariable Long categoryId) throws Exception {
-    //     return taskService.getTasksBbyCategory(categoryId);
-    // }
+    @GetMapping("/category/{categoryId}")
+    public List<Task> getTasksByCategoryId(@PathVariable Long categoryId) throws Exception {
+        return taskService.getTasksBbyCategory(categoryId);
+    }
+
+    
     
     @GetMapping("/status/{taskStatus}")
     public List<Task> getTasksByStatus(@PathVariable TaskStatus taskStatus) {
