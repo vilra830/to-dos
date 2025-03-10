@@ -18,7 +18,7 @@ export default function TaskPage() {
 
   return (
     <>
-      <h2> Task Inforamtion </h2>
+      <h2> Task Information </h2>
       <h3> {task.name} </h3>
       <h4> {task.description}</h4>
       <h5>{task.category.name}</h5>
