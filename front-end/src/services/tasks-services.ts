@@ -21,7 +21,12 @@ export interface Task {
 }
 
 // Task status enum
-type TaskStatus = "IN_PROGRESS" | "COMPLETED" | "PENDING" | "CANCELLED"; // Add other possible statuses as needed
+type TaskStatus =
+  | "IN_PROGRESS"
+  | "COMPLETED"
+  | "DELETED"
+  | "UPDATED"
+  | "ARCHIVED"; // Add other possible statuses as needed
 
 // Tasks array response type
 type TasksResponse = Task[];
@@ -115,4 +120,41 @@ export const createCategory = async (
   }
 
   return (await response.json()) as Category;
+};
+
+export const updateTask = async (taskId: string, data: TaskFormData) => {
+  let taskData = {
+    name: data.name,
+    description: data.description,
+    taskStatus: data.taskStatus,
+    isArchived: false,
+    categoryId: 0,
+  };
+
+  if (data.categoryId && data.categoryId !== "0") {
+    taskData.categoryId = Number(data.categoryId);
+  } else if (
+    data.categoryId === "0" &&
+    data.newCategory &&
+    data.newCategoryDescription
+  ) {
+    const newCategory: Category = await createCategory(
+      data.newCategory,
+      data.newCategoryDescription
+    );
+    taskData.categoryId = newCategory.id;
+  }
+
+  const response = await fetch(`http://localhost:8080/tasks/${taskId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(taskData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to Post");
+  }
+  return (await response.json()) as Task;
 };
