@@ -81,9 +81,48 @@ public void getAllTasks_TasksInDB_ReturnsSucess(){
             .get("/tasks")
         .then()
             .statusCode(HttpStatus.OK.value())
-            .body("$", hasSize(2))
-            .body("name", hasItems("Operations Staff Meeting","Monthly Budget Review"));
+            .body("$", hasSize(2)) //checks that there are 2 items in my tasks table
+            .body("name", hasItems("Operations Staff Meeting","Monthly Budget Review")); //checks that ive got these task names in my tasks table
 
+}
+
+@Test
+public void getAllTasks_NoTasksInDB_ReturnsEmptyArray() {
+    taskRepository.deleteAll();
+    given().when()
+        .get("/tasks")
+    .then() 
+        .statusCode(HttpStatus.OK.value())
+        .body("$" , hasSize(0)); //"$" - this refers to the whole thing - of the body of the return 
+
+}
+
+@Test
+public void getTaskById_TaskExists_ReturnsSuccess() {
+    // Arrange: We already have tasks saved from the @BeforeEach method
+    Task task = tasks.get(0); // Fetch the first task in the list (you can use any task)
+
+    // Act & Assert: Fetch the task by its ID
+    given()
+        .when()
+            .get("/tasks/{taskId}", task.getId())  // Use the task's ID
+        .then()
+            .statusCode(HttpStatus.OK.value())  // Expect a 200 OK response
+            .body("name", equalTo(task.getName()))  // Check that the name matches
+            .body("description", equalTo(task.getDescription()))  // Check the description
+            .body("categoryId", equalTo(task.getCategory().getId().intValue()))  // Check categoryName
+            .body("taskStatus", equalTo(task.getTaskStatus().toString()))  // Check the task status
+            .body("isArchived", equalTo(task.getIsArchived()));  // Check the isArchived status
+}
+
+@Test
+public void getTaskById_TaskNotFound_ReturnsNotFound() {
+    // Act & Assert: Request a task that doesn't exist
+    given()
+        .when()
+            .get("/tasks/{taskId}", 999L)  // Using an ID that doesn't exist in the DB
+        .then()
+            .statusCode(HttpStatus.NOT_FOUND.value());  // Expect a 404 Not Found response
 }
 
 
