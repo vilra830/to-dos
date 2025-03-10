@@ -30,6 +30,8 @@ public class CreateTaskDTO {
         @NotNull
         private TaskStatus taskStatus;
 
+
+
         public String getName() {
             return name;
         }
@@ -44,6 +46,14 @@ public class CreateTaskDTO {
 
         public Boolean getIsArchived() {
             return isArchived;
+        }
+
+        public String getNewCategoryName() {
+            return newCategoryName;
+        }
+
+        public String getNewCategoryDescription() {
+            return newCategoryDescription;
         }
 
         public TaskStatus getTaskStatus() {
@@ -77,6 +87,20 @@ public class CreateTaskDTO {
         public void setTaskStatus(TaskStatus taskStatus) {
             this.taskStatus = taskStatus;
         }
+
+           // These two fields are only needed if categoryId is 0
+    private String newCategoryName;
+    private String newCategoryDescription;
+
+
+
+    public void setNewCategoryName(String newCategoryName) {
+        this.newCategoryName = newCategoryName;
+    }
+
+    public void setNewCategoryDescription(String newCategoryDescription) {
+        this.newCategoryDescription = newCategoryDescription;
+    }
 
         
 

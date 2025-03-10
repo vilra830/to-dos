@@ -32,8 +32,27 @@ public class TaskService {
     private ModelMapper modelMapper;
 
     public Task createTask(CreateTaskDTO data) throws NotFoundException {
+        Category category;
+
+        if(data.getCategoryId() != 0 ) {
+            category = categoryRepository.findById(data.getCategoryId()).orElseThrow( () -> new NotFoundException("Category not found"));
+
+
+            
+
+        } else {
+
+            if(data.getNewCategoryName() == null || data.getNewCategoryDescription() == null){
+                throw new IllegalArgumentException("New category name and description must be provided");
+            }
+
+            Category newCategory = new Category();
+            newCategory.setName(data.getNewCategoryName());
+            newCategory.setDescription(data.getNewCategoryDescription());
+            category = categoryRepository.save(newCategory);
+
         
-        Category category = categoryRepository.findById(data.getCategoryId()).orElseThrow( () -> new NotFoundException("Category not found"));
+        }
 
         Task newTask = new Task();
 
