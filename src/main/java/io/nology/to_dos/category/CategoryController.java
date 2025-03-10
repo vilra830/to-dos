@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,11 +61,51 @@ public class CategoryController {
             Optional<Category> result = this.categoryService.updateById(id, data);
 
             if(result.isEmpty()){
-                throw new NotFoundException("Could not update book with ID " + id + " it does not exist");
+                throw new NotFoundException("Could not update Category with ID " + id + " it does not exist");
             } 
        
             return new ResponseEntity<Category>(result.get(), HttpStatus.OK);
         }
+
+        @GetMapping("/{id}")
+        public ResponseEntity<Category> getCategoryById(@PathVariable Long id) throws NotFoundException {
+            Optional<Category> category = this.categoryService.getCategoryById(id);
+
+
+           
+            if(category.isEmpty()){
+
+                throw new NotFoundException("Could not find Category with ID " + id);
+
+            }
+            Category foundCategory = category.get();
+
+            //if it does not match our DTO - it will return 400 Bad Request
+            return new ResponseEntity<>(foundCategory, HttpStatus.OK);
+    
+    
+            
+        }
+
+
+        // IWANT TO UNDERSTAND THIS
+        @DeleteMapping("/{id}")
+        public ResponseEntity<?> deleteById(@PathVariable Long id) throws NotFoundException{
+            // a couple of choices when deleting
+            //response could be the thing that you just deleted
+            // respond with a 204 no content
+            boolean wasDeleted = this.categoryService.deleteById(id);
+            if(!wasDeleted) {
+
+                throw new NotFoundException("Could not delete Category with id " + id + " as it does not exist");
+            }
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+
+        }
+
+        
 
 
   }

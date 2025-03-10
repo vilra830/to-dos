@@ -7,7 +7,7 @@ public class UpdateCategoryDTO {
     
     @Pattern(regexp = ".*\\S.*", message = "Name cannot be empty")
     private String name;
-    @Pattern(regexp = ".*\\S.*", message = "Title cannot be empty")    
+    @Pattern(regexp = ".*\\S.*", message = "Description cannot be empty")    
     private String description;
 
 
