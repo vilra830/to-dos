@@ -72,8 +72,14 @@ public class Task {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
     public void setIsArchived(Boolean isArchived) {
         this.isArchived = isArchived;
+    }
+
+    public Long getCategoryId() {
+        return category != null ? category.getId() : null;
     }
    
     public void setId(Long id) {
