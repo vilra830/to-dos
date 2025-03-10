@@ -1,3 +1,7 @@
+import { createStaticRouter } from "react-router";
+import { TaskFormData, taskStatuses } from "../components/TaskForm/schema";
+import CategoriesPage from "../pages/CategoriesPage";
+
 // Category type definition
 export interface Category {
   id: number;
@@ -10,6 +14,7 @@ export interface Task {
   id: number;
   name: string;
   description: string;
+  categoryId: number;
   category: Category;
   isArchived: boolean;
   taskStatus: TaskStatus;
@@ -30,6 +35,14 @@ export const getAllCategories = async () => {
   return (await response.json()) as Category[];
 };
 
+export const getTasksByCategoryId = async (id: string) => {
+  const response = await fetch("http://localhost:8080/category/" + id);
+  if (!response.ok) {
+    throw new Error("Failed to fetch Categories with ID " + id);
+  }
+  return (await response.json()) as Task[];
+};
+
 export const getAllTasks = async () => {
   const response = await fetch("http://localhost:8080/tasks");
   if (!response.ok) {
@@ -47,4 +60,59 @@ export const getTaskById = async (id: string) => {
   }
 
   return (await response.json()) as Task;
+};
+
+export const createTask = async (data: TaskFormData) => {
+  let taskData = {
+    name: data.name,
+    description: data.description,
+    taskStatus: data.taskStatus,
+    isArchived: false,
+    categoryId: 0,
+  };
+
+  if (data.categoryId && data.categoryId !== "0") {
+    taskData.categoryId = Number(data.categoryId);
+  } else if (
+    data.categoryId === "0" &&
+    data.newCategory &&
+    data.newCategoryDescription
+  ) {
+    const newCategory: Category = await createCategory(
+      data.newCategory,
+      data.newCategoryDescription
+    );
+    taskData.categoryId = newCategory.id;
+  }
+
+  const response = await fetch("http://localhost:8080/tasks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(taskData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to Post");
+  }
+  return (await response.json()) as Task;
+};
+
+export const createCategory = async (
+  name: string,
+  description: string
+): Promise<Category> => {
+  const response = await fetch("http://localhost:8080/categories", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, description }),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to create Category");
+  }
+
+  return (await response.json()) as Category;
 };
