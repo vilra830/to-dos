@@ -56,12 +56,12 @@ public class TaskService {
     }
     
 
-    public List<Task> getTasksBbyCategory(Long id) throws Exception {
+    public List<Task> getTasksBbyCategory(Long id) throws NotFoundException {
         // you need to fetch all tasks from DB using taskrepo.findbyCategory(category id)
         Optional<Category> result = categoryRepository.findById(id);
 
         if (result.isEmpty()){
-            throw new Exception("No category found on this ID " + id);
+            throw new NotFoundException("No category found on this ID " + id);
         } 
 
         Category category = result.get();
@@ -72,6 +72,20 @@ public class TaskService {
     public List<Task> getTasksByStatus(TaskStatus taskStatus) {
 
         return taskRepository.findByTaskStatus(taskStatus);
+    }
+
+
+    public Task getTaskById(Long taskId) throws NotFoundException {
+
+        Optional<Task> result = taskRepository.findById(taskId);
+        if(result.isEmpty()){
+
+            throw new NotFoundException("No Task with such ID" + taskId);
+        }
+        Task task = result.get();
+
+        return task;
+
     }
 
 }
