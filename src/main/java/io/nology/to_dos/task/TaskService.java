@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import io.nology.to_dos.category.CategoryRepository;
 import io.nology.to_dos.category.CategoryService;
+import io.nology.to_dos.category.UpdateCategoryDTO;
 import io.nology.to_dos.common.exceptions.NotFoundException;
 import io.nology.to_dos.task.Task.TaskStatus;
 import jakarta.validation.Valid;
@@ -94,18 +95,70 @@ public class TaskService {
     }
 
 
-    public Task getTaskById(Long taskId) throws NotFoundException {
+    public Optional<Task> getTaskById(Long taskId) throws NotFoundException {
 
         Optional<Task> result = taskRepository.findById(taskId);
         if(result.isEmpty()){
 
             throw new NotFoundException("No Task with such ID" + taskId);
         }
-        Task task = result.get();
 
-        return task;
+        return result;
 
     }
+
+
+
+
+
+
+public Optional<Task> updateById(Long id, UpdateTaskDTO data) throws NotFoundException {
+//this.getById(id) - method in this service 
+
+
+
+        Optional<Task> result = this.getTaskById(id);
+        if(result.isEmpty()){
+
+            throw new NotFoundException("No Task with such ID" + id);
+        }
+
+
+
+        // there should be a category found as we have already accounted if result is empty
+
+
+        Task foundTask = result.get();
+
+        if(data.getName() != null ){
+
+            foundTask.setName(data.getName().trim());
+        }
+
+        if(data.getDescription() != null){
+
+            foundTask.setDescription(data.getDescription().trim());
+        }
+        if (data.getTaskStatus() != null) {
+            foundTask.setTaskStatus(data.getTaskStatus());
+        }
+        
+        if(data.getDescription() != null){
+
+            foundTask.setDescription(data.getDescription().trim());
+        }
+        
+        
+        
+
+        taskRepository.save(foundTask);
+
+        return Optional.of(foundTask);
+
+
+
+    }
+
 
 }
 
