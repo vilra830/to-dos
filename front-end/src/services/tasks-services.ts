@@ -128,11 +128,11 @@ export const updateTask = async (taskId: string, data: TaskFormData) => {
     description: data.description,
     taskStatus: data.taskStatus,
     isArchived: false,
-    categoryId: 0,
+    categoryId: data.categoryId,
   };
 
   if (data.categoryId && data.categoryId !== "0") {
-    taskData.categoryId = Number(data.categoryId);
+    taskData.categoryId = data.categoryId;
   } else if (
     data.categoryId === "0" &&
     data.newCategory &&
@@ -142,7 +142,7 @@ export const updateTask = async (taskId: string, data: TaskFormData) => {
       data.newCategory,
       data.newCategoryDescription
     );
-    taskData.categoryId = newCategory.id;
+    taskData.categoryId = String(newCategory.id);
   }
 
   const response = await fetch(`http://localhost:8080/tasks/${taskId}`, {

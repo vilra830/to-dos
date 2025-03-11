@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { getTaskById, Task, updateTask } from "../services/tasks-services";
 import UpdateTaskForm from "../components/TaskForm/UpdateTaskForm";
 import { TaskFormData } from "../components/TaskForm/schema";
+import styles from "./TaskPage.module.scss";
 
 export default function TaskPage() {
   const { id = "x" } = useParams();
@@ -26,8 +27,10 @@ export default function TaskPage() {
       setIsUpdating(true);
       setError(null);
       setSuccess(null);
+      console.log("DATA BEFORE ADDED" + data.categoryId);
 
       const updatedTask = await updateTask(id, data);
+      console.log(updatedTask);
 
       setTask(updatedTask);
       setSuccess("Task updated Successfully!");
@@ -44,20 +47,23 @@ export default function TaskPage() {
   }
 
   return (
-    <>
-      <h2> Task Information </h2>
-      <h3> {task.name} </h3>
-      <h4> {task.description}</h4>
-      <h5>{task.category.name}</h5>
-      <h6>{task.taskStatus}</h6>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-      {success && <div style={{ color: "green" }}>{success}</div>}
-      {isUpdating && <div>Updating task...</div>}
+    <div className={styles.taskCard}>
+      <div className={styles.taskHeader}>
+        <h2 className={styles.taskTitle}>Task Information</h2>
+      </div>
 
       <div>
-        <h3>Update Task</h3>
+        <h3> {task.name} </h3>
+        <h4> {task.description}</h4>
+        <h5>{task.category.name}</h5>
+        <h6>{task.taskStatus}</h6>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        {success && <div style={{ color: "green" }}>{success}</div>}
+        {isUpdating && <div>Updating task...</div>}
+      </div>
+      <div>
         <UpdateTaskForm task={task} onSubmit={handleUpdateTask} />
       </div>
-    </>
+    </div>
   );
 }

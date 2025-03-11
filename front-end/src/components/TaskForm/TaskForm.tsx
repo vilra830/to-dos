@@ -47,6 +47,12 @@ export default function TaskForm({ onSubmit }: TaskFormProps) {
     }
   }, [errors]);
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset(); // Reset only after a successful submission
+    }
+  }, [isSubmitSuccessful, reset]);
+
   isSubmitSuccessful && reset();
 
   return (

@@ -1,44 +1,58 @@
 .form-container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px; /* Prevents the form from stretching too wide */
+  margin: 0 auto;
+  padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+}
 
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    font-size: 16px;
-  }
+.form-container div {
+  width: 100%;
+  margin-bottom: 15px;
+}
 
-  input,
-  select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
+.form-container label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: block;
+}
 
-  select {
-    cursor: pointer;
-  }
+.form-container input,
+.form-container textarea,
+.form-container select {
+  width: 100%; /* Ensures all inputs take up full available width */
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding is included in the width */
+}
 
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
+.form-container textarea {
+  resize: vertical; /* Allow the textarea to grow vertically */
+}
 
-    &:hover {
-      background-color: #0056b3;
-    }
-  }
+.form-container button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+.small-error {
+  color: red;
+  font-size: 12px;
 }
