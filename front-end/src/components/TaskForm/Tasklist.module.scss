@@ -1,0 +1,62 @@
+.taskListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .taskTable {
+    width: 80%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .taskTable th,
+  .taskTable td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .taskTable th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .taskLink {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .taskLink:hover {
+    text-decoration: underline;
+  }
+  
+  .createTaskButtonContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .createTaskButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .createTaskButton:hover {
+    background-color: #0056b3;
+  }
