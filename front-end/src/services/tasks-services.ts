@@ -40,14 +40,6 @@ export const getAllCategories = async () => {
   return (await response.json()) as Category[];
 };
 
-export const getTasksByCategoryId = async (id: string) => {
-  const response = await fetch("http://localhost:8080/category/" + id);
-  if (!response.ok) {
-    throw new Error("Failed to fetch Categories with ID " + id);
-  }
-  return (await response.json()) as Task[];
-};
-
 export const getAllTasks = async () => {
   const response = await fetch("http://localhost:8080/tasks");
   if (!response.ok) {
@@ -65,6 +57,18 @@ export const getTaskById = async (id: string) => {
   }
 
   return (await response.json()) as Task;
+};
+
+export const getTasksByCategoryId = async (id: string) => {
+  //its a string even though its along in Java because params is always string
+  const response = await fetch(
+    `http://localhost:8080/tasks/by-category?categoryId=${id}`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch tasks by category"); // we can pass this error to the back end
+  }
+
+  return (await response.json()) as Task[];
 };
 
 export const createTask = async (data: TaskFormData) => {

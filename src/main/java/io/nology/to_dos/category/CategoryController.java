@@ -83,11 +83,7 @@ public class CategoryController {
             //if it does not match our DTO - it will return 400 Bad Request
             return new ResponseEntity<>(foundCategory, HttpStatus.OK);
     
-    
-            
         }
-
-
         // IWANT TO UNDERSTAND THIS
         @DeleteMapping("/{id}")
         public ResponseEntity<?> deleteById(@PathVariable Long id) throws NotFoundException{

@@ -35,28 +35,27 @@ public class TaskController {
 
 
     @PostMapping()
-    public ResponseEntity<Task> createTask(@RequestBody @Valid CreateTaskDTO data) throws NotFoundException {
-        //TODO: process POST request
+    public ResponseEntity<Task> createTask(@RequestBody @Valid CreateTaskDTO data) throws NotFoundException { // needs to have something inside it that comes withe resquest = CreateTaskDTO
         Task task = taskService.createTask(data);
-        return new ResponseEntity<>(task, HttpStatus.CREATED);
-              
 
+        if (task == null) {
+            throw new NotFoundException("Task or category not found");
+        }
+    
+        return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
     
         @GetMapping()
     public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> tasks = this.taskService.getAll();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
-
-      
     }
 
-    @GetMapping("/category/{categoryId}")
-    public List<Task> getTasksByCategoryId(@PathVariable Long categoryId) throws Exception {
+    @GetMapping("/by-category")
+    public List<Task> getTasksByCategoryId(@RequestParam Long categoryId) throws NotFoundException {
         return taskService.getTasksBbyCategory(categoryId);
     }
 
-    
     
     @GetMapping("/status/{taskStatus}")
     public List<Task> getTasksByStatus(@PathVariable TaskStatus taskStatus) {

@@ -52,7 +52,7 @@ export default function TaskPage() {
         <h2 className={styles.taskTitle}>Task Information</h2>
       </div>
 
-      <div>
+      <div className={styles.taskInfo}>
         <h3> {task.name} </h3>
         <h4> {task.description}</h4>
         <h5>{task.category.name}</h5>

@@ -13,7 +13,6 @@ import io.nology.to_dos.common.exceptions.NotFoundException;
 
 
 @ControllerAdvice 
-
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
