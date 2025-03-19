@@ -70,6 +70,17 @@ public class TaskService {
 
     }
 
+    public boolean deleteTask(Long taskId) throws NotFoundException {
+        Optional<Task> result = taskRepository.findById(taskId);
+     
+        if(result.isEmpty()){
+           throw new NotFoundException("No Employee with such ID " + taskId);
+        }
+   
+         taskRepository.deleteById(taskId);
+        return true;
+        
+    }
 
     public List<Task> getAll() {
                 return taskRepository.findAll();

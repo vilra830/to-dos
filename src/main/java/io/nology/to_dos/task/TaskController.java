@@ -13,6 +13,7 @@ import io.nology.to_dos.common.exceptions.NotFoundException;
 import io.nology.to_dos.task.Task.TaskStatus;
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,6 +73,16 @@ public class TaskController {
         Task foundTask = task.get();
 
         return new ResponseEntity<>(foundTask, HttpStatus.OK);
+    }
+
+        
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Task> deleteTask(@PathVariable Long taskId) throws NotFoundException {
+        Boolean isDeleted = taskService.deleteTask(taskId);
+        if(!isDeleted){
+            throw new NotFoundException("Could not find Task with ID " + taskId);
+        }
+        return ResponseEntity.noContent().build();
     }
 
     

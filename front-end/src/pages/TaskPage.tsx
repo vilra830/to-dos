@@ -62,6 +62,11 @@ export default function TaskPage() {
         {isUpdating && <div>Updating task...</div>}
       </div>
       <div>
+        <button>Delete Task</button>
+        <button>Duplicate Task</button>
+        {/* <button>Update Task</button> */}
+      </div>
+      <div>
         <UpdateTaskForm task={task} onSubmit={handleUpdateTask} />
       </div>
     </div>
