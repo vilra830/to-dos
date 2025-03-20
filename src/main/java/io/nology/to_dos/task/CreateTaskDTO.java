@@ -10,10 +10,6 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateTaskDTO {
 
-        @NotNull
-        @Min(1)
-        private Long categoryId;
-
         @NotBlank
         private String name;
       
@@ -30,34 +26,48 @@ public class CreateTaskDTO {
         @NotNull
         private TaskStatus taskStatus;
 
+        private Long categoryId;
 
+        private String newCategoryName;
 
         public String getName() {
             return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getDescription() {
             return description;
         }
 
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
         public Category getCategory() {
             return category;
+        }
+
+        public void setCategory(Category category) {
+            this.category = category;
         }
 
         public Boolean getIsArchived() {
             return isArchived;
         }
 
-        public String getNewCategoryName() {
-            return newCategoryName;
-        }
-
-        public String getNewCategoryDescription() {
-            return newCategoryDescription;
+        public void setIsArchived(Boolean isArchived) {
+            this.isArchived = isArchived;
         }
 
         public TaskStatus getTaskStatus() {
             return taskStatus;
+        }
+
+        public void setTaskStatus(TaskStatus taskStatus) {
+            this.taskStatus = taskStatus;
         }
 
         public Long getCategoryId() {
@@ -68,44 +78,15 @@ public class CreateTaskDTO {
             this.categoryId = categoryId;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public String getNewCategoryName() {
+            return newCategoryName;
         }
 
-        public void setDescription(String description) {
-            this.description = description;
+        public void setNewCategoryName(String newCategoryName) {
+            this.newCategoryName = newCategoryName;
         }
 
-        public void setCategory(Category category) {
-            this.category = category;
-        }
-
-        public void setIsArchived(Boolean isArchived) {
-            this.isArchived = isArchived;
-        }
-
-        public void setTaskStatus(TaskStatus taskStatus) {
-            this.taskStatus = taskStatus;
-        }
-
-           // These two fields are only needed if categoryId is 0
-    private String newCategoryName;
-    private String newCategoryDescription;
-
-
-
-    public void setNewCategoryName(String newCategoryName) {
-        this.newCategoryName = newCategoryName;
-    }
-
-    public void setNewCategoryDescription(String newCategoryDescription) {
-        this.newCategoryDescription = newCategoryDescription;
-    }
-
-        
-
-
-        
+     
 
 }
 

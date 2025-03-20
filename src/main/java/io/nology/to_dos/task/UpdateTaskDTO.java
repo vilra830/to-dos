@@ -17,7 +17,6 @@ public class UpdateTaskDTO {
 
     private Boolean isArchived = false;
 
-  
     public Boolean getIsArchived() {
         return isArchived;
     }
@@ -41,7 +40,6 @@ public class UpdateTaskDTO {
         this.name = name;
     }
 
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -60,25 +58,6 @@ public class UpdateTaskDTO {
         this.category = category;
     }
 
-    private String newCategoryName;
-    private String newCategoryDescription;
-
-
-    public String getNewCategoryName() {
-        return newCategoryName;
-    }
-    public void setNewCategoryName(String newCategoryName) {
-        this.newCategoryName = newCategoryName;
-    }
-    public String getNewCategoryDescription() {
-        return newCategoryDescription;
-    }
-    public void setNewCategoryDescription(String newCategoryDescription) {
-        this.newCategoryDescription = newCategoryDescription;
-    }
-    public Long getCategoryId() {
-        return categoryId;
-    }
 
 }
 

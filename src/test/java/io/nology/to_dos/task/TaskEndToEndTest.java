@@ -45,8 +45,8 @@ public class TaskEndToEndTest {
 //be careful to make sure you're saving valid data
 
 //create category so I can post task with Category
-Category operationsCategory = categoryRepository.save(new Category("Operations", "Tasks associated daily operational flows of the business"));
-Category financeCategory = categoryRepository.save(new Category("Finance", "Tasks associated with financial management, payrolls, and taxation"));
+Category operationsCategory = categoryRepository.save(new Category("Operations"));
+Category financeCategory = categoryRepository.save(new Category("Finance"));
 
 
 Task task1 = new Task();

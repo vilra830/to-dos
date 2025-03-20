@@ -7,81 +7,66 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import io.nology.to_dos.common.GlobalExceptionHandler;
+import io.nology.to_dos.common.exceptions.DuplicateCategoryException;
+import io.nology.to_dos.common.exceptions.NotFoundException;
+import io.nology.to_dos.config.ModelMapperConfig;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 
 @Service
 public class CategoryService {
+
+
 
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private ModelMapper modelMapper;
 
+
     public Category createCategory(CreateCategoryDTO data) {
-
-        // Category newCategory = new Category();
-        // newCategory.setName(data.getName().trim());
-        // newCategory.setDescription(data.getDescription().trim());
-
-        Category newCategory = modelMapper.map(data, Category.class); // this line replaces the 3 lines above - it says -take this data - turn it into a CAtegory class , if some values are null - skip it otherwise trim its values
-
-
+        
+        Category newCategory = modelMapper.map(data, Category.class); 
         return categoryRepository.save(newCategory);
-
     }
 
     public List<Category> getAll() {
 
         return categoryRepository.findAll();
-
     }
 
     public Optional<Category> getById(Long id){
-
         return categoryRepository.findById(id);
     }
 
 
 
-    public Optional<Category> updateById(Long id, UpdateCategoryDTO data) {
-//this.getById(id) - method in this service 
-
+    public Optional<Category> updateById(Long id, UpdateCategoryDTO data) throws NotFoundException, DuplicateCategoryException {
+        
         Optional<Category> result = this.getById(id);
 
-        if(result.isEmpty()){
-            //Optional.of(null) - same 
-            return result;
+            if(result.isEmpty()){
+
+                throw new NotFoundException("No Category with such ID " + id + " found");
         }
 
-        // there should be a category found as we have already accounted if result is empty
+            Category foundCategory = result.get();
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.map(data, foundCategory);
 
+        try {
 
-        Category foundCategory = result.get();
+            return Optional.of(categoryRepository.save(foundCategory));
 
-        if(data.getName() != null ){
+        } catch (ConstraintViolationException e) {
 
-            foundCategory.setName(data.getName().trim());
+            throw new DuplicateCategoryException("Category Name '" + data.getName() + "' already exists");
         }
-
-        if(data.getDescription() != null){
-
-            foundCategory.setDescription(data.getDescription().trim());
-        }
-        
-
-        categoryRepository.save(foundCategory);
-
-        return Optional.of(foundCategory);
-
-
 
     }
 
     public Optional<Category> getCategoryById(Long id) {
-        // // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'getCategoryById'");
-
         return categoryRepository.findById(id);
     }
 

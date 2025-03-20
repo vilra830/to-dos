@@ -3,8 +3,8 @@ package io.nology.to_dos.task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import io.nology.to_dos.category.Category;  
-
+import io.nology.to_dos.category.Category;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,9 +44,8 @@ public class Task {
     @Column(nullable = false)
     private String description;
    
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonIgnoreProperties
     private Category category;
    
     @Column(nullable = false)
@@ -54,51 +53,99 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
-    
-    public Category getCategory() {
-        return category;
+
+    public Long getId() {
+        return id;
     }
-    public Boolean getIsArchived() {
-        return isArchived;
+
+    public void setId(Long id) {
+        this.id = id;
     }
+
     public String getName() {
         return name;
     }
-    public String getDescription() {
-        return description;
-    }
+
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
     }
 
+    public Boolean getIsArchived() {
+        return isArchived;
+    }
 
     public void setIsArchived(Boolean isArchived) {
         this.isArchived = isArchived;
     }
 
-    public Long getCategoryId() {
-        return category != null ? category.getId() : null;
-    }
-   
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public void setTaskStatus(TaskStatus taskStatus) {
-        this.taskStatus = taskStatus;
-    }
-    public Long getId() {
-        return id;
-    }
     public TaskStatus getTaskStatus() {
         return taskStatus;
     }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+    
+    // public Category getCategory() {
+    //     return category;
+    // }
+    // public Boolean getIsArchived() {
+    //     return isArchived;
+    // }
+    // public String getName() {
+    //     return name;
+    // }
+    // public String getDescription() {
+    //     return description;
+    // }
+    // public void setName(String name) {
+    //     this.name = name;
+    // }
+    // public void setDescription(String description) {
+    //     this.description = description;
+    // }
+
+    // public void setCategory(Category category) {
+    //     this.category = category;
+    // }
+
+
+    // public void setIsArchived(Boolean isArchived) {
+    //     this.isArchived = isArchived;
+    // }
+
+    // public Long getCategoryId() {
+    //     return category != null ? category.getId() : null;
+    // }
+   
+    // public void setId(Long id) {
+    //     this.id = id;
+    // }
+    // public void setTaskStatus(TaskStatus taskStatus) {
+    //     this.taskStatus = taskStatus;
+    // }
+    // public Long getId() {
+    //     return id;
+    // }
+    // public TaskStatus getTaskStatus() {
+    //     return taskStatus;
+    // }
 
 
 

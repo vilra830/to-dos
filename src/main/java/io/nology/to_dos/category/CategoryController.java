@@ -1,11 +1,13 @@
 package io.nology.to_dos.category;
 
+import io.nology.to_dos.common.exceptions.DuplicateCategoryException;
 import io.nology.to_dos.common.exceptions.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.validator.cfg.defs.pl.REGONDef;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +31,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    //boilerplate code
-    private CategoryService categoryService;
-
-    CategoryController(CategoryService categoryService) {
-
-        this.categoryService = categoryService;
-    }
+    @Autowired
+    CategoryService categoryService;
 
     @PostMapping()
     public ResponseEntity<Category> postCategory(@RequestBody @Valid CreateCategoryDTO data){
         
-        Category newCategory = this.categoryService.createCategory(data);
+        Category newCategory = categoryService.createCategory(data);
         return new ResponseEntity<Category>(newCategory, HttpStatus.CREATED);
         
 
@@ -48,7 +45,7 @@ public class CategoryController {
 
     @GetMapping()
     public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categories = this.categoryService.getAll();
+        List<Category> categories = categoryService.getAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
 
 
@@ -56,7 +53,7 @@ public class CategoryController {
     }
     
     @PatchMapping("/{id}")
-    public ResponseEntity<Category> updateById(@PathVariable Long id, @Valid @RequestBody UpdateCategoryDTO data) throws NotFoundException{
+    public ResponseEntity<Category> updateById(@PathVariable Long id, @Valid @RequestBody UpdateCategoryDTO data) throws NotFoundException, DuplicateCategoryException{
 
             Optional<Category> result = this.categoryService.updateById(id, data);
 

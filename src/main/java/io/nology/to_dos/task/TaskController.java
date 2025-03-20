@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.nology.to_dos.category.CategoryController;
+import io.nology.to_dos.category.CategoryRepository;
 import io.nology.to_dos.category.UpdateCategoryDTO;
+import io.nology.to_dos.common.exceptions.DuplicateCategoryException;
 import io.nology.to_dos.common.exceptions.NotFoundException;
 import io.nology.to_dos.task.Task.TaskStatus;
 import jakarta.validation.Valid;
@@ -23,10 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
+
+    private final CategoryRepository categoryRepository;
+
+    private final CategoryController categoryController;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -35,15 +40,16 @@ public class TaskController {
     private TaskService taskService;
 
 
-    @PostMapping()
-    public ResponseEntity<Task> createTask(@RequestBody @Valid CreateTaskDTO data) throws NotFoundException { // needs to have something inside it that comes withe resquest = CreateTaskDTO
-        Task task = taskService.createTask(data);
+    TaskController(CategoryController categoryController, CategoryRepository categoryRepository) {
+        this.categoryController = categoryController;
+        this.categoryRepository = categoryRepository;
+    }
 
-        if (task == null) {
-            throw new NotFoundException("Task or category not found");
-        }
-    
-        return new ResponseEntity<>(task, HttpStatus.CREATED);
+
+    @PostMapping()
+    public ResponseEntity<Task> createTask(@RequestBody @Valid CreateTaskDTO data) throws NotFoundException, DuplicateCategoryException {
+            Task task = taskService.createTask(data);
+            return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
     
         @GetMapping()
@@ -54,7 +60,7 @@ public class TaskController {
 
     @GetMapping("/by-category")
     public List<Task> getTasksByCategoryId(@RequestParam Long categoryId) throws NotFoundException {
-        return taskService.getTasksBbyCategory(categoryId);
+        return taskService.getTasksByCategory(categoryId);
     }
 
     
